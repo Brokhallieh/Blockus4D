@@ -332,7 +332,7 @@ void affiche_pieces_non_utilisees(int dim1_taille, int dim2_taille, bool tab[dim
 
 int main() {
 	int board[TAILLE_CELL][TAILLE_CELL][TAILLE_CELL][TAILLE_CELL];
-	_4d_fill_with_n(TAILLE_CELL, board, 1094257386);	/*board contient l'état actuel du plateau (1 si pièce du J1
+	_4d_fill_with_n(TAILLE_CELL, board, 0);	/*board contient l'état actuel du plateau (1 si pièce du J1
 		présente, 2 si pièce du J2 présente, 3 si tentative de pose et que pièce du J1 présente, et 4 si
 		tentative de pose et que pièce du J2 présente, et 0 sinon)*/
 	int player1[TAILLE_CELL][TAILLE_CELL][TAILLE_CELL][TAILLE_CELL];
@@ -380,7 +380,7 @@ int main() {
 				}
 			} while (!between(1, piecenumber, NB_PIECES) || (listepieces[piecenumber-1][playernumber-1]));	//recommence si le numéro donné n'est pas valide
 		
-			printf("état actuel du plateau\n");
+			printf("etat actuel du plateau\n");
 			affiche_sur_terminal_4d(TAILLE_CELL, board); printf("\n");
 		}
 
