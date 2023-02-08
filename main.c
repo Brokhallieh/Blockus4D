@@ -146,125 +146,145 @@ void init_pieces(int taille, int nb_pieces, int pieces[taille][taille][taille][t
 	pieces[2][0][0][0][12] = true;
 	pieces[3][0][0][0][12] = true;
 	pieces[0][1][0][0][12] = true;
-
-	/* à remplacer par les bonnes valeurs
+	
 	pieces[0][0][0][0][13] = true;
-	pieces[0][0][0][0][13] = true;
-	pieces[0][0][0][0][13] = true;
-	pieces[0][0][0][0][13] = true;
-	pieces[0][0][0][0][13] = true;
+	pieces[1][0][0][0][13] = true;
+	pieces[2][0][0][0][13] = true;
+	pieces[3][0][0][0][13] = true;
+	pieces[1][1][0][0][13] = true;
 
 	pieces[0][0][0][0][14] = true;
-	pieces[0][0][0][0][14] = true;
-	pieces[0][0][0][0][14] = true;
-	pieces[0][0][0][0][14] = true;
-	pieces[0][0][0][0][14] = true;
+	pieces[1][0][0][0][14] = true;
+	pieces[2][0][0][0][14] = true;
+	pieces[2][1][0][0][14] = true;
+	pieces[3][1][0][0][14] = true;
 
 	pieces[0][0][0][0][15] = true;
-	pieces[0][0][0][0][15] = true;
-	pieces[0][0][0][0][15] = true;
-	pieces[0][0][0][0][15] = true;
-	pieces[0][0][0][0][15] = true;
+	pieces[1][0][0][0][15] = true;
+	pieces[2][0][0][0][15] = true;
+	pieces[2][1][0][0][15] = true;
+	pieces[2][2][0][0][15] = true;
 
 	pieces[0][0][0][0][16] = true;
-	pieces[0][0][0][0][16] = true;
-	pieces[0][0][0][0][16] = true;
-	pieces[0][0][0][0][16] = true;
-	pieces[0][0][0][0][16] = true;
+	pieces[1][0][0][0][16] = true;
+	pieces[2][0][0][0][16] = true;
+	pieces[1][1][0][0][16] = true;
+	pieces[2][1][0][0][16] = true;
 
 	pieces[0][0][0][0][17] = true;
-	pieces[0][0][0][0][17] = true;
-	pieces[0][0][0][0][17] = true;
-	pieces[0][0][0][0][17] = true;
-	pieces[0][0][0][0][17] = true;
+	pieces[1][0][0][0][17] = true;
+	pieces[2][0][0][0][17] = true;
+	pieces[1][1][0][0][17] = true;
+	pieces[1][2][0][0][17] = true;
 
-	pieces[0][0][0][0][18] = true;
-	pieces[0][0][0][0][18] = true;
-	pieces[0][0][0][0][18] = true;
-	pieces[0][0][0][0][18] = true;
-	pieces[0][0][0][0][18] = true;
+	pieces[1][0][0][0][18] = true;
+	pieces[0][1][0][0][18] = true;
+	pieces[1][1][0][0][18] = true;
+	pieces[2][1][0][0][18] = true;
+	pieces[1][2][0][0][18] = true;
 
+	pieces[1][0][0][0][19] = true;
 	pieces[0][0][0][0][19] = true;
-	pieces[0][0][0][0][19] = true;
-	pieces[0][0][0][0][19] = true;
-	pieces[0][0][0][0][19] = true;
-	pieces[0][0][0][0][19] = true;
+	pieces[1][1][0][0][19] = true;
+	pieces[2][1][0][0][19] = true;
+	pieces[1][2][0][0][19] = true;
 
+	pieces[1][0][0][0][20] = true;
 	pieces[0][0][0][0][20] = true;
-	pieces[0][0][0][0][20] = true;
-	pieces[0][0][0][0][20] = true;
-	pieces[0][0][0][0][20] = true;
-	pieces[0][0][0][0][20] = true;
-
+	pieces[1][1][0][0][20] = true;
+	pieces[2][2][0][0][20] = true;
+	pieces[1][2][0][0][20] = true;
+	
+	pieces[1][0][0][0][21] = true;
 	pieces[0][0][0][0][21] = true;
-	pieces[0][0][0][0][21] = true;
-	pieces[0][0][0][0][21] = true;
-	pieces[0][0][0][0][21] = true;
-	pieces[0][0][0][0][21] = true;
+	pieces[2][0][0][0][21] = true;
+	pieces[2][1][0][0][21] = true;
+	pieces[2][1][1][0][21] = true;
 
+	pieces[1][0][0][0][22] = true;
 	pieces[0][0][0][0][22] = true;
-	pieces[0][0][0][0][22] = true;
-	pieces[0][0][0][0][22] = true;
-	pieces[0][0][0][0][22] = true;
-	pieces[0][0][0][0][22] = true;
+	pieces[2][0][0][0][22] = true;
+	pieces[2][1][0][0][22] = true;
+	pieces[2][0][1][0][22] = true;
 
+	pieces[1][0][0][0][23] = true;
 	pieces[0][0][0][0][23] = true;
-	pieces[0][0][0][0][23] = true;
-	pieces[0][0][0][0][23] = true;
-	pieces[0][0][0][0][23] = true;
-	pieces[0][0][0][0][23] = true;
+	pieces[2][0][0][0][23] = true;
+	pieces[2][1][0][0][23] = true;
+	pieces[1][0][1][0][23] = true;
 
+	pieces[1][0][0][0][24] = true;
 	pieces[0][0][0][0][24] = true;
-	pieces[0][0][0][0][24] = true;
-	pieces[0][0][0][0][24] = true;
-	pieces[0][0][0][0][24] = true;
-	pieces[0][0][0][0][24] = true;
+	pieces[2][0][0][0][24] = true;
+	pieces[2][1][0][0][24] = true;
+	pieces[0][0][1][0][24] = true;
 
+	pieces[1][0][0][0][25] = true;
 	pieces[0][0][0][0][25] = true;
-	pieces[0][0][0][0][25] = true;
-	pieces[0][0][0][0][25] = true;
-	pieces[0][0][0][0][25] = true;
-	pieces[0][0][0][0][25] = true;
-
+	pieces[1][1][0][0][25] = true;
+	pieces[2][1][0][0][25] = true;
+	pieces[0][0][1][0][25] = true;
+	
+	pieces[1][0][0][0][26] = true;
 	pieces[0][0][0][0][26] = true;
-	pieces[0][0][0][0][26] = true;
-	pieces[0][0][0][0][26] = true;
-	pieces[0][0][0][0][26] = true;
-	pieces[0][0][0][0][26] = true;
+	pieces[1][1][0][0][26] = true;
+	pieces[2][1][0][0][26] = true;
+	pieces[0][0][1][0][26] = true;
 
+	pieces[1][0][0][0][27] = true;
 	pieces[0][0][0][0][27] = true;
-	pieces[0][0][0][0][27] = true;
-	pieces[0][0][0][0][27] = true;
-	pieces[0][0][0][0][27] = true;
-	pieces[0][0][0][0][27] = true;
+	pieces[1][1][0][0][27] = true;
+	pieces[2][1][0][0][27] = true;
+	pieces[0][1][1][0][27] = true;
 
+	pieces[1][0][0][0][28] = true;
 	pieces[0][0][0][0][28] = true;
-	pieces[0][0][0][0][28] = true;
-	pieces[0][0][0][0][28] = true;
-	pieces[0][0][0][0][28] = true;
-	pieces[0][0][0][0][28] = true;
+	pieces[2][0][0][0][28] = true;
+	pieces[1][1][0][0][28] = true;
+	pieces[0][0][1][0][28] = true;
 
+	pieces[1][0][0][0][29] = true;
 	pieces[0][0][0][0][29] = true;
-	pieces[0][0][0][0][29] = true;
-	pieces[0][0][0][0][29] = true;
-	pieces[0][0][0][0][29] = true;
-	pieces[0][0][0][0][29] = true;
-
+	pieces[2][0][0][0][29] = true;
+	pieces[1][1][0][0][29] = true;
+	pieces[0][0][1][0][29] = true;
+	
+	pieces[1][0][0][0][30] = true;
 	pieces[0][0][0][0][30] = true;
-	pieces[0][0][0][0][30] = true;
-	pieces[0][0][0][0][30] = true;
-	pieces[0][0][0][0][34] = true;
-	pieces[0][0][0][0][34] = true;
-	pieces[0][0][0][0][34] = true;
-	pieces[0][0][0][0][34] = true;
-	pieces[0][0][0][0][34] = true;
+	pieces[2][0][0][0][30] = true;
+	pieces[1][1][0][0][30] = true;
+	pieces[1][0][1][0][30] = true;
 
-	pieces[0][0][0][0][35] = true;
-	pieces[0][0][0][0][35] = true;
-	pieces[0][0][0][0][35] = true;
-	pieces[0][0][0][0][35] = true;
-	pieces[0][0][0][0][35] = true;
-	*/
+	pieces[1][0][0][0][31] = true;
+	pieces[0][0][0][0][31] = true;
+	pieces[0][0][1][0][31] = true;
+	pieces[0][1][0][0][31] = true;
+	pieces[1][1][0][0][31] = true;
+	
+	pieces[1][1][1][1][32] = true;
+	pieces[2][1][1][1][32] = true;
+	pieces[1][1][2][1][32] = true;
+	pieces[1][1][1][2][32] = true;
+	pieces[1][2][1][1][32] = true;
+
+	pieces[1][1][1][1][33] = true;
+	pieces[2][1][1][1][33] = true;
+	pieces[1][1][2][1][33] = true;
+	pieces[1][1][1][0][33] = true;
+	pieces[1][2][1][1][33] = true;
+	
+	pieces[1][1][1][1][34] = true;
+	pieces[2][1][1][1][34] = true;
+	pieces[1][1][2][1][34] = true;
+	pieces[2][1][1][2][34] = true;
+	pieces[1][2][1][1][34] = true;
+	
+	pieces[1][1][1][1][35] = true;
+	pieces[2][1][1][1][35] = true;
+	pieces[1][1][2][1][35] = true;
+	pieces[2][1][1][0][35] = true;
+	pieces[1][2][1][1][35] = true;
+	
 }
 
 
