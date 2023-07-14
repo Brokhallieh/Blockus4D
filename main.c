@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 #define TAILLE_CELL 5	// Taille de chaque dimension de la matrice de matrice, doit faire au moins 5
 #define NB_PIECES 36    // nombre de pièces dans le jeu, donné à titre indicatif (ne pas modifier)
@@ -463,12 +463,12 @@ int main() {
 
 	while (inGame[0] || inGame[1]) {	//tant qu'1 des 2 J joue toujours
 		if (inGame[playernumber-1]) {	//vérifie si le joueur dont c'est le tour joue toujours, passe son tour sinon
-			printf("ready, player %d", playernumber);	//affichage de à qui c'est le tour
+			printf("ready, player %d\n", playernumber);	//affichage de à qui c'est le tour
 			affiche_pieces_non_utilisees(NB_PIECES, NB_PLAYERS, listepieces, playernumber);
 			int piecenumber;	//contient la pièce que le numéro de la pièce que le joueur veut jouer
 			do {
 
-				printf("\nVeuillez donnez le numero de la piece que vous voulez mettre:");
+				printf("Veuillez donnez le numero de la piece que vous voulez mettre: ");
 				while (scanf(" %d", &piecenumber) != 1) {
 					getchar();
 				}
@@ -501,7 +501,7 @@ int main() {
 
 				if (motionchar == 't') {
 					int vecttranslation[4] = {0, 0, 0, 0};
-					char continuer;
+					char continuer[10];
 					do {
 						printf("Veuillez entrer le vecteur \"i j k l\" de glisse\n");
 						while (scanf(" %d %d %d %d", &vecttranslation[0], &vecttranslation[1], &vecttranslation[2], &vecttranslation[3]) != 4) {
@@ -513,10 +513,13 @@ int main() {
 						affiche_sur_terminal_4d(TAILLE_CELL, board);
 						add_sub_board_pieces(TAILLE_CELL, NB_PIECES, piecenumber, board, pieces, false);
 
-						continuer = 'o';
+						continuer[0] = 'o';
 						printf("Voulez-vous re-deplacer votre piece? ('o' pour oui, autre pour non)\n");
-						scanf(" %c", &continuer);
-					} while (continuer == 'o');
+						scanf("%s", &continuer);
+						printf("continuer = %s\n", continuer);
+						if (!strcmp("Papa", continuer))
+							printf("Merci pour le code MatLab et tout le reste, je t'aime Papa\n");
+					} while (continuer[0] == 'o');
 				}
 
 				else if (motionchar == 'r') {
