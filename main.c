@@ -121,7 +121,7 @@ void affiche_sur_terminal_2d(int dim1_taille, int dim2_taille, int tab[dim1_tail
 }
 
 void init_pieces(int taille, int nb_pieces, bool pieces[taille][taille][taille][taille][nb_pieces]) {
-	_5d_fill_with_b(TAILLE_CELL, NB_PIECES, pieces, false);
+	_5d_fill_with_b(taille, nb_pieces, pieces, false);
 
 	//pièce de longueur 1:
 	pieces[0][0][0][0][0] = true;
@@ -429,6 +429,100 @@ void add_sub_board_pieces(int taille_board, int nb_pieces, int num_piece, int bo
 	}
 }
 
+bool pose_valide(int taille, int nb_pieces, int piecenumber, bool pieces[taille][taille][taille][taille][nb_pieces], int board[taille][taille][taille][taille], int joueur) {
+	// pour que la pose soit valide, il faut que la pose ne chevauche pas une autre pièce déjà posée, 
+	// qu'elle n'ait pas un volume en commun avec une pièce déjà posée (3 dimensions en commun et 1 dimension à 1 d'écart) 
+	// et que la pièce ait un plan en contact avec une autre pièce déjà posée par le même joueur(2 dimensions en commun, 2 dimensions à 1 d'écart)
+	bool valide = false;
+	for (int i = 0; i < taille; i++) {
+		for (int j = 0; j < taille; j++) {
+			for (int k = 0; k < taille; k++) {
+				for (int l = 0; l < taille; l++) {
+					if (pieces[i][j][k][l][piecenumber-1]) {
+						if (board[i][j][k][l]
+						|| board[i-1][j][k][l]
+						|| board[i+1][j][k][l]
+						|| board[i][j-1][k][l]
+						|| board[i][j+1][k][l]
+						|| board[i][j][k-1][l]
+						|| board[i][j][k+1][l]
+						|| board[i][j][k][l-1]
+						|| board[i][j][k][l+1]) {
+							return false;
+						}
+						if (board[i-1][j-1][k][l] == joueur
+						|| board[i-1][j+1][k][l] == joueur
+						|| board[i+1][j-1][k][l] == joueur
+						|| board[i+1][j+1][k][l] == joueur
+						|| board[i-1][j][k-1][l] == joueur
+						|| board[i-1][j][k+1][l] == joueur
+						|| board[i+1][j][k-1][l] == joueur
+						|| board[i+1][j][k+1][l] == joueur
+						|| board[i-1][j][k][l-1] == joueur
+						|| board[i-1][j][k][l+1] == joueur
+						|| board[i+1][j][k][l-1] == joueur
+						|| board[i+1][j][k][l+1] == joueur
+						|| board[i][j-1][k-1][l] == joueur
+						|| board[i][j-1][k+1][l] == joueur
+						|| board[i][j+1][k-1][l] == joueur
+						|| board[i][j+1][k+1][l] == joueur
+						|| board[i][j-1][k][l-1] == joueur
+						|| board[i][j-1][k][l+1] == joueur
+						|| board[i][j+1][k][l-1] == joueur
+						|| board[i][j+1][k][l+1] == joueur
+						|| board[i][j][k-1][l-1] == joueur
+						|| board[i][j][k-1][l+1] == joueur
+						|| board[i][j][k+1][l-1] == joueur
+						|| board[i][j][k+1][l+1] == joueur) {
+							valide = true;
+						}
+					}
+				}
+			}
+		}
+	}
+	return valide;
+}
+
+void pose(int taille, int nb_pieces, int piecenumber, bool pieces[taille][taille][taille][taille][nb_pieces], int board[taille][taille][taille][taille], int joueur) {
+	for (int i = 0; i < taille; i++) {
+		for (int j = 0; j < taille; j++) {
+			for (int k = 0; k < taille; k++) {
+				for (int l = 0; l < taille; l++) {
+					if (pieces[i][j][k][l][piecenumber-1]) {
+						board[i][j][k][l] = joueur;
+					}
+				}
+			}
+		}
+	}
+}
+
+int choose_piece(int nb_pieces, int nb_players, bool listepieces[nb_pieces][nb_players], int playernumber) {
+	int piecenumber = 0;
+	affiche_pieces_non_utilisees(nb_pieces, nb_players, listepieces, playernumber);
+	do {
+
+		printf("Veuillez donnez le numero de la piece que vous voulez mettre: ");
+		while (scanf(" %d", &piecenumber) != 1) {
+			getchar();
+		}
+
+		if (!between(1, piecenumber, NB_PIECES)) {
+			continue;
+		}
+
+		else if (listepieces[piecenumber - 1][playernumber - 1]) { // si la pièce a déja étée utilisée
+			printf("Piece %d deja utilisee.\n", piecenumber);
+			affiche_pieces_non_utilisees(NB_PIECES, NB_PLAYERS, listepieces, playernumber);
+		}
+		else {
+			break; // sors de la boucle while car on a le numéro de pièce recherché
+		}
+	} while (!between(1, piecenumber, NB_PIECES) || (listepieces[piecenumber-1][playernumber-1]));	//recommence si le numéro donné n'est pas valide
+	return piecenumber;
+}
+
 
 int main() {
 	int board[TAILLE_CELL][TAILLE_CELL][TAILLE_CELL][TAILLE_CELL];
@@ -464,29 +558,7 @@ int main() {
 	while (inGame[0] || inGame[1]) {	//tant qu'1 des 2 J joue toujours
 		if (inGame[playernumber-1]) {	//vérifie si le joueur dont c'est le tour joue toujours, passe son tour sinon
 			printf("ready, player %d\n", playernumber);	//affichage de à qui c'est le tour
-			affiche_pieces_non_utilisees(NB_PIECES, NB_PLAYERS, listepieces, playernumber);
-			int piecenumber;	//contient la pièce que le numéro de la pièce que le joueur veut jouer
-			do {
-
-				printf("Veuillez donnez le numero de la piece que vous voulez mettre: ");
-				while (scanf(" %d", &piecenumber) != 1) {
-					getchar();
-				}
-
-				if (!between(1, piecenumber, NB_PIECES)) {
-					continue;
-				}
-
-				else if (listepieces[piecenumber - 1][playernumber - 1]) { // si la pièce a déja étée utilisée
-					printf("Piece %d deja utilisee.\n", piecenumber);
-					affiche_pieces_non_utilisees(NB_PIECES, NB_PLAYERS, listepieces, playernumber);
-				}
-				else { // marque la pièce comme utilisée si elle est choisie par le joueur et est valide
-					listepieces[piecenumber - 1][playernumber - 1] = true;
-					break; // sors de la boucle while car on a le numéro de pièce recherché
-				}
-			} while (!between(1, piecenumber, NB_PIECES) || (listepieces[piecenumber-1][playernumber-1]));	//recommence si le numéro donné n'est pas valide
-
+			int piecenumber = choose_piece(NB_PIECES, NB_PLAYERS, listepieces, playernumber); //demande au joueur de choisir une pièce
 
 			add_sub_board_pieces(TAILLE_CELL, NB_PIECES, piecenumber, board, pieces, true);
 			printf("etat actuel du plateau\n");
@@ -527,11 +599,23 @@ int main() {
 				}
 
 				else if (motionchar == 'c') {
-
+					piecenumber = choose_piece(NB_PIECES, NB_PLAYERS, listepieces, playernumber);
 				}
 
 				else if (motionchar == 'p') {
-
+					if (pose_valide(TAILLE_CELL, NB_PIECES, piecenumber, pieces, board, playernumber)) {
+						pose(TAILLE_CELL, NB_PIECES, piecenumber, pieces, board, playernumber);
+						veut_bouger = false;
+						affiche_sur_terminal_4d(TAILLE_CELL, board);
+						// marque la pièce comme utilisée si elle est choisie par le joueur et est valide
+						listepieces[piecenumber - 1][playernumber - 1] = true;
+					}
+					else {
+						printf("Pose invalide\n");
+						add_sub_board_pieces(TAILLE_CELL, NB_PIECES, piecenumber, board, pieces, true);
+						affiche_sur_terminal_4d(TAILLE_CELL, board);
+						add_sub_board_pieces(TAILLE_CELL, NB_PIECES, piecenumber, board, pieces, false);
+					}
 				}
 
 				else {
