@@ -523,6 +523,31 @@ int choose_piece(int nb_pieces, int nb_players, bool listepieces[nb_pieces][nb_p
 	return piecenumber;
 }
 
+void exchange_int(int *a, int *b) {
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+void rotate90Clockwise(int N, int mat[N][N]) {
+    // Créer un tableau temporaire pour stocker le résultat
+    int temp[N][N];
+
+    // Remplir le tableau temporaire avec les valeurs tournées
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            temp[j][N - 1 - i] = mat[i][j];
+        }
+    }
+
+    // Copier les valeurs tournées dans le tableau d'origine
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            mat[i][j] = temp[i][j];
+        }
+    }
+}
+
 
 int main() {
 	int board[TAILLE_CELL][TAILLE_CELL][TAILLE_CELL][TAILLE_CELL];
@@ -588,14 +613,126 @@ int main() {
 						continuer[0] = 'o';
 						printf("Voulez-vous re-deplacer votre piece? ('o' pour oui, autre pour non)\n");
 						scanf("%s", &continuer);
-						printf("continuer = %s\n", continuer);
 						if (!strcmp("Papa", continuer))
 							printf("Merci pour le code MatLab et tout le reste, je t'aime Papa\n");
 					} while (continuer[0] == 'o');
 				}
 
 				else if (motionchar == 'r') {
+					int dim1, dim2;
+					char continuer[10];
+					do {
+						printf("Veuillez entrer le les dimensions d'axe fixe pour la rotation\n");
+						while (scanf(" %d %d", &dim1, &dim2) != 2) {
+							getchar();
+						}
+						dim1--; dim2--;
 
+						//rotation de la pièce
+						int coords[5][4] = {{-1, -1, -1, -1}, {-1, -1, -1, -1}, {-1, -1, -1, -1}, {-1, -1, -1, -1}, {-1, -1, -1, -1}};
+						int coordID = 0;
+						for (int i = 0; i < TAILLE_CELL; i++) {
+							for (int j = 0; j < TAILLE_CELL; j++) {
+								for (int k = 0; k < TAILLE_CELL; k++) {
+									for (int l = 0; l < TAILLE_CELL; l++) {
+										if (pieces[i][j][k][l][piecenumber-1] != 0 && pieces[i][j][k][l][piecenumber-1] != -1) {
+											pieces[i][j][k][l][piecenumber-1] = false;
+											coords[coordID][0] = i;
+											coords[coordID][1] = j;
+											coords[coordID][2] = k;
+											coords[coordID][3] = l;
+											coordID++;
+										}
+									}
+								}
+							}
+						}
+
+						switch (dim1) {
+							case 0:
+								switch (dim2) {
+									case 1:
+										for (int coordID = 0; coordID < 5; coordID++) {
+											if (coords[coordID][0] != -1) {
+												coords[coordID][2] = TAILLE_CELL - 1 - coords[coordID][2];
+												exchange_int(&coords[coordID][2], &coords[coordID][3]);
+											}
+										}
+										break;
+									case 2:
+										for (int coordID = 0; coordID < 5; coordID++) {
+											if (coords[coordID][0] != -1) {
+												coords[coordID][1] = TAILLE_CELL - 1 - coords[coordID][1];
+												exchange_int(&coords[coordID][1], &coords[coordID][3]);
+											}
+										}
+										break;
+									case 3:
+										for (int coordID = 0; coordID < 5; coordID++) {
+											if (coords[coordID][0] != -1) {
+												coords[coordID][1] = TAILLE_CELL - 1 - coords[coordID][1];
+												exchange_int(&coords[coordID][1], &coords[coordID][2]);
+											}
+										}
+										break;
+									default:
+										break;
+								}
+								break;
+							case 1:
+								switch (dim2) {
+									case 2:
+										for (int coordID = 0; coordID < 5; coordID++) {
+											if (coords[coordID][0] != -1) {
+												coords[coordID][0] = TAILLE_CELL - 1 - coords[coordID][0];
+												exchange_int(&coords[coordID][0], &coords[coordID][3]);
+											}
+										}
+										break;
+									case 3:
+										for (int coordID = 0; coordID < 5; coordID++) {
+											if (coords[coordID][0] != -1) {
+												coords[coordID][0] = TAILLE_CELL - 1 - coords[coordID][0];
+												exchange_int(&coords[coordID][0], &coords[coordID][2]);
+											}
+										}
+										break;
+									default:
+										break;
+								}
+								break;
+							case 2:
+								switch (dim2) {
+									case 3:
+										for (int coordID = 0; coordID < 5; coordID++) {
+											if (coords[coordID][0] != -1) {
+												coords[coordID][0] = TAILLE_CELL - 1 - coords[coordID][0];
+												exchange_int(&coords[coordID][0], &coords[coordID][1]);
+											}
+										}
+										break;
+									default:
+										break;
+								}
+								break;
+							default:
+								break;
+						}
+						
+						for (int coordID = 0; coordID < 5; coordID++) {
+							if (coords[coordID][0] != -1) {
+								pieces[coords[coordID][0]][coords[coordID][1]][coords[coordID][2]][coords[coordID][3]][piecenumber-1] = true;
+							}
+						}
+
+						add_sub_board_pieces(TAILLE_CELL, NB_PIECES, piecenumber, board, pieces, true);
+						affiche_sur_terminal_4d(TAILLE_CELL, board);
+						add_sub_board_pieces(TAILLE_CELL, NB_PIECES, piecenumber, board, pieces, false);
+
+						continuer[0] = 'o';
+						printf("Voulez-vous re-rotater votre piece? ('o' pour oui, autre pour non)\n");
+						scanf("%s", &continuer);
+					} while (continuer[0] == 'o');
 				}
 
 				else if (motionchar == 'c') {
