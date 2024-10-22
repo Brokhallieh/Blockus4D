@@ -333,7 +333,8 @@ bool between(int bottom, int n, int top) {
 }
 
 int modulo(int n, int mod) {
-	return n%mod < 0 ? (n % mod) + mod : n % mod;
+	int base = n % mod;
+	return base < 0 ? (base) + mod : base;
 }
 
 void affiche_pieces_non_utilisees(int dim1_taille, int dim2_taille, bool tab[dim1_taille][dim2_taille], int joueur) {
@@ -440,40 +441,40 @@ bool pose_valide(int taille, int nb_pieces, int piecenumber, bool pieces[taille]
 				for (int l = 0; l < taille; l++) {
 					if (pieces[i][j][k][l][piecenumber-1]) {
 						if (board[i][j][k][l]
-						|| board[i-1][j][k][l]
-						|| board[i+1][j][k][l]
-						|| board[i][j-1][k][l]
-						|| board[i][j+1][k][l]
-						|| board[i][j][k-1][l]
-						|| board[i][j][k+1][l]
-						|| board[i][j][k][l-1]
-						|| board[i][j][k][l+1]) {
+						|| board[modulo(i-1, taille)][j][k][l]
+						|| board[modulo(i+1, taille)][j][k][l]
+						|| board[i][modulo(j-1, taille)][k][l]
+						|| board[i][modulo(j+1, taille)][k][l]
+						|| board[i][j][modulo(k-1, taille)][l]
+						|| board[i][j][modulo(k+1, taille)][l]
+						|| board[i][j][k][modulo(l-1, taille)]
+						|| board[i][j][k][modulo(l+1, taille)]) {
 							return false;
 						}
-						if (board[i-1][j-1][k][l] == joueur
-						|| board[i-1][j+1][k][l] == joueur
-						|| board[i+1][j-1][k][l] == joueur
-						|| board[i+1][j+1][k][l] == joueur
-						|| board[i-1][j][k-1][l] == joueur
-						|| board[i-1][j][k+1][l] == joueur
-						|| board[i+1][j][k-1][l] == joueur
-						|| board[i+1][j][k+1][l] == joueur
-						|| board[i-1][j][k][l-1] == joueur
-						|| board[i-1][j][k][l+1] == joueur
-						|| board[i+1][j][k][l-1] == joueur
-						|| board[i+1][j][k][l+1] == joueur
-						|| board[i][j-1][k-1][l] == joueur
-						|| board[i][j-1][k+1][l] == joueur
-						|| board[i][j+1][k-1][l] == joueur
-						|| board[i][j+1][k+1][l] == joueur
-						|| board[i][j-1][k][l-1] == joueur
-						|| board[i][j-1][k][l+1] == joueur
-						|| board[i][j+1][k][l-1] == joueur
-						|| board[i][j+1][k][l+1] == joueur
-						|| board[i][j][k-1][l-1] == joueur
-						|| board[i][j][k-1][l+1] == joueur
-						|| board[i][j][k+1][l-1] == joueur
-						|| board[i][j][k+1][l+1] == joueur) {
+						if (board[modulo(i-1, taille)][modulo(j-1, taille)][k][l] == joueur
+						|| board[modulo(i-1, taille)][modulo(j+1, taille)][k][l] == joueur
+						|| board[modulo(i+1, taille)][modulo(j-1, taille)][k][l] == joueur
+						|| board[modulo(i+1, taille)][modulo(j+1, taille)][k][l] == joueur
+						|| board[modulo(i-1, taille)][j][modulo(k-1, taille)][l] == joueur
+						|| board[modulo(i-1, taille)][j][modulo(k+1, taille)][l] == joueur
+						|| board[modulo(i+1, taille)][j][modulo(k-1, taille)][l] == joueur
+						|| board[modulo(i+1, taille)][j][modulo(k+1, taille)][l] == joueur
+						|| board[modulo(i-1, taille)][j][k][modulo(l-1, taille)] == joueur
+						|| board[modulo(i-1, taille)][j][k][modulo(l+1, taille)] == joueur
+						|| board[modulo(i+1, taille)][j][k][modulo(l-1, taille)] == joueur
+						|| board[modulo(i+1, taille)][j][k][modulo(l+1, taille)] == joueur
+						|| board[i][modulo(j-1, taille)][modulo(k-1, taille)][l] == joueur
+						|| board[i][modulo(j-1, taille)][modulo(k+1, taille)][l] == joueur
+						|| board[i][modulo(j+1, taille)][modulo(k-1, taille)][l] == joueur
+						|| board[i][modulo(j+1, taille)][modulo(k+1, taille)][l] == joueur
+						|| board[i][modulo(j-1, taille)][k][modulo(l-1, taille)] == joueur
+						|| board[i][modulo(j-1, taille)][k][modulo(l+1, taille)] == joueur
+						|| board[i][modulo(j+1, taille)][k][modulo(l-1, taille)] == joueur
+						|| board[i][modulo(j+1, taille)][k][modulo(l+1, taille)] == joueur
+						|| board[i][j][modulo(k-1, taille)][modulo(l-1, taille)] == joueur
+						|| board[i][j][modulo(k-1, taille)][modulo(l+1, taille)] == joueur
+						|| board[i][j][modulo(k+1, taille)][modulo(l-1, taille)] == joueur
+						|| board[i][j][modulo(k+1, taille)][modulo(l+1, taille)] == joueur) {
 							valide = true;
 						}
 					}
@@ -612,7 +613,7 @@ int main() {
 
 						continuer[0] = 'o';
 						printf("Voulez-vous re-deplacer votre piece? ('o' pour oui, autre pour non)\n");
-						scanf("%s", &continuer);
+						scanf("%s", continuer);
 						if (!strcmp("Papa", continuer))
 							printf("Merci pour le code MatLab et tout le reste, je t'aime Papa\n");
 					} while (continuer[0] == 'o');
@@ -731,7 +732,7 @@ int main() {
 
 						continuer[0] = 'o';
 						printf("Voulez-vous re-rotater votre piece? ('o' pour oui, autre pour non)\n");
-						scanf("%s", &continuer);
+						scanf("%s", continuer);
 					} while (continuer[0] == 'o');
 				}
 
