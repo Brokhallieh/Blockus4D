@@ -332,9 +332,9 @@ bool between(int bottom, int n, int top) {
 	return (bottom <= n) && (n <= top);
 }
 
-int modulo(int n, int mod) {
-	int base = n % mod;
-	return base < 0 ? (base) + mod : base;
+int reste(int numerateur, int denominateur) {
+	int base = numerateur % denominateur;
+	return base >= 0 ? base : (base) + denominateur;
 }
 
 void affiche_pieces_non_utilisees(int dim1_taille, int dim2_taille, bool tab[dim1_taille][dim2_taille], int joueur) {
@@ -405,7 +405,7 @@ void translate(int taille_4_prem_dim, int taille_5eme_dim, int num_piece, bool t
 		}
 	}
 	for (int n=0; n<length; n++) {
-		tab[modulo((trouve[n][0] + i), taille_4_prem_dim)][modulo((trouve[n][1] + j), taille_4_prem_dim)][modulo((trouve[n][2] + k), taille_4_prem_dim)][modulo((trouve[n][3] + l), taille_4_prem_dim)][num_piece - 1] = true;
+		tab[reste((trouve[n][0] + i), taille_4_prem_dim)][reste((trouve[n][1] + j), taille_4_prem_dim)][reste((trouve[n][2] + k), taille_4_prem_dim)][reste((trouve[n][3] + l), taille_4_prem_dim)][num_piece - 1] = true;
 	}
 }
 
@@ -441,40 +441,40 @@ bool pose_valide(int taille, int nb_pieces, int piecenumber, bool pieces[taille]
 				for (int l = 0; l < taille; l++) {
 					if (pieces[i][j][k][l][piecenumber-1]) {
 						if (board[i][j][k][l]
-						|| board[modulo(i-1, taille)][j][k][l]
-						|| board[modulo(i+1, taille)][j][k][l]
-						|| board[i][modulo(j-1, taille)][k][l]
-						|| board[i][modulo(j+1, taille)][k][l]
-						|| board[i][j][modulo(k-1, taille)][l]
-						|| board[i][j][modulo(k+1, taille)][l]
-						|| board[i][j][k][modulo(l-1, taille)]
-						|| board[i][j][k][modulo(l+1, taille)]) {
+						|| board[reste(i-1, taille)][j][k][l]
+						|| board[reste(i+1, taille)][j][k][l]
+						|| board[i][reste(j-1, taille)][k][l]
+						|| board[i][reste(j+1, taille)][k][l]
+						|| board[i][j][reste(k-1, taille)][l]
+						|| board[i][j][reste(k+1, taille)][l]
+						|| board[i][j][k][reste(l-1, taille)]
+						|| board[i][j][k][reste(l+1, taille)]) {
 							return false;
 						}
-						if (board[modulo(i-1, taille)][modulo(j-1, taille)][k][l] == joueur
-						|| board[modulo(i-1, taille)][modulo(j+1, taille)][k][l] == joueur
-						|| board[modulo(i+1, taille)][modulo(j-1, taille)][k][l] == joueur
-						|| board[modulo(i+1, taille)][modulo(j+1, taille)][k][l] == joueur
-						|| board[modulo(i-1, taille)][j][modulo(k-1, taille)][l] == joueur
-						|| board[modulo(i-1, taille)][j][modulo(k+1, taille)][l] == joueur
-						|| board[modulo(i+1, taille)][j][modulo(k-1, taille)][l] == joueur
-						|| board[modulo(i+1, taille)][j][modulo(k+1, taille)][l] == joueur
-						|| board[modulo(i-1, taille)][j][k][modulo(l-1, taille)] == joueur
-						|| board[modulo(i-1, taille)][j][k][modulo(l+1, taille)] == joueur
-						|| board[modulo(i+1, taille)][j][k][modulo(l-1, taille)] == joueur
-						|| board[modulo(i+1, taille)][j][k][modulo(l+1, taille)] == joueur
-						|| board[i][modulo(j-1, taille)][modulo(k-1, taille)][l] == joueur
-						|| board[i][modulo(j-1, taille)][modulo(k+1, taille)][l] == joueur
-						|| board[i][modulo(j+1, taille)][modulo(k-1, taille)][l] == joueur
-						|| board[i][modulo(j+1, taille)][modulo(k+1, taille)][l] == joueur
-						|| board[i][modulo(j-1, taille)][k][modulo(l-1, taille)] == joueur
-						|| board[i][modulo(j-1, taille)][k][modulo(l+1, taille)] == joueur
-						|| board[i][modulo(j+1, taille)][k][modulo(l-1, taille)] == joueur
-						|| board[i][modulo(j+1, taille)][k][modulo(l+1, taille)] == joueur
-						|| board[i][j][modulo(k-1, taille)][modulo(l-1, taille)] == joueur
-						|| board[i][j][modulo(k-1, taille)][modulo(l+1, taille)] == joueur
-						|| board[i][j][modulo(k+1, taille)][modulo(l-1, taille)] == joueur
-						|| board[i][j][modulo(k+1, taille)][modulo(l+1, taille)] == joueur) {
+						if (board[reste(i-1, taille)][reste(j-1, taille)][k][l] == joueur
+						|| board[reste(i-1, taille)][reste(j+1, taille)][k][l] == joueur
+						|| board[reste(i+1, taille)][reste(j-1, taille)][k][l] == joueur
+						|| board[reste(i+1, taille)][reste(j+1, taille)][k][l] == joueur
+						|| board[reste(i-1, taille)][j][reste(k-1, taille)][l] == joueur
+						|| board[reste(i-1, taille)][j][reste(k+1, taille)][l] == joueur
+						|| board[reste(i+1, taille)][j][reste(k-1, taille)][l] == joueur
+						|| board[reste(i+1, taille)][j][reste(k+1, taille)][l] == joueur
+						|| board[reste(i-1, taille)][j][k][reste(l-1, taille)] == joueur
+						|| board[reste(i-1, taille)][j][k][reste(l+1, taille)] == joueur
+						|| board[reste(i+1, taille)][j][k][reste(l-1, taille)] == joueur
+						|| board[reste(i+1, taille)][j][k][reste(l+1, taille)] == joueur
+						|| board[i][reste(j-1, taille)][reste(k-1, taille)][l] == joueur
+						|| board[i][reste(j-1, taille)][reste(k+1, taille)][l] == joueur
+						|| board[i][reste(j+1, taille)][reste(k-1, taille)][l] == joueur
+						|| board[i][reste(j+1, taille)][reste(k+1, taille)][l] == joueur
+						|| board[i][reste(j-1, taille)][k][reste(l-1, taille)] == joueur
+						|| board[i][reste(j-1, taille)][k][reste(l+1, taille)] == joueur
+						|| board[i][reste(j+1, taille)][k][reste(l-1, taille)] == joueur
+						|| board[i][reste(j+1, taille)][k][reste(l+1, taille)] == joueur
+						|| board[i][j][reste(k-1, taille)][reste(l-1, taille)] == joueur
+						|| board[i][j][reste(k-1, taille)][reste(l+1, taille)] == joueur
+						|| board[i][j][reste(k+1, taille)][reste(l-1, taille)] == joueur
+						|| board[i][j][reste(k+1, taille)][reste(l+1, taille)] == joueur) {
 							valide = true;
 						}
 					}
@@ -549,23 +549,38 @@ void rotate90Clockwise(int N, int mat[N][N]) {
     }
 }
 
+void calculateScores(int *scorePlayer1, int *scorePlayer2, int taille, int board[taille][taille][taille][taille]) {
+	*scorePlayer1 = 0;
+	*scorePlayer2 = 0;
+	for (int i = 0; i < taille; i++) {
+		for (int j = 0; j < taille; j++) {
+			for (int k = 0; k < taille; k++) {
+				for (int l = 0; l < taille; l++) {
+					switch (board[i][j][k][l])
+					{
+						case 1:
+							(*scorePlayer1)++;
+							break;
+						case 2:
+							(*scorePlayer2)++;
+					}
+				}
+			}
+		}
+	}
+}
+
 
 int main() {
 	int board[TAILLE_CELL][TAILLE_CELL][TAILLE_CELL][TAILLE_CELL];
 	_4d_fill_with_n(TAILLE_CELL, board, 0);	/*board contient l'état actuel du plateau (1 si pièce du J1
 		présente, 2 si pièce du J2 présente, 3 si tentative de pose sur une case vide, 4 si tentative de pose et que pièce du 
 		J1 présente, et 5 si tentative de pose et que pièce du J2 présente, et 0 sinon)*/
-	int player1[TAILLE_CELL][TAILLE_CELL][TAILLE_CELL][TAILLE_CELL];
-	_4d_fill_with_b(TAILLE_CELL, player1, false);	//player1 contient true si il y a une pièce du joueur 1, false sinon
-	int player2[TAILLE_CELL][TAILLE_CELL][TAILLE_CELL][TAILLE_CELL];
-	_4d_fill_with_b(TAILLE_CELL, player2, false);	//player2 contient true si il y a une pièce du joueur 2, false sinon
 
 	//board[1][2][3][4] = 5; affiche_sur_terminal_4d(TAILLE_CELL, board);	//affichage de débugage
 
 	//met les emplacement de base du J1 et du J2 sur le plateau
-	player1[1][1][1][1] = 1;
 	board[1][1][1][1] = 1;
-	player2[TAILLE_CELL-2][TAILLE_CELL-2][TAILLE_CELL-2][TAILLE_CELL-2] = 1;
 	board[TAILLE_CELL-2][TAILLE_CELL-2][TAILLE_CELL-2][TAILLE_CELL-2] = 2;
 	
 	bool listepieces[NB_PIECES][NB_PLAYERS];	// listepieces dit si chaque pièce a déja étée utilisée par le J1 et le J2
@@ -586,8 +601,8 @@ int main() {
 			printf("ready, player %d\n", playernumber);	//affichage de à qui c'est le tour
 			int piecenumber = choose_piece(NB_PIECES, NB_PLAYERS, listepieces, playernumber); //demande au joueur de choisir une pièce
 
-			add_sub_board_pieces(TAILLE_CELL, NB_PIECES, piecenumber, board, pieces, true);
 			printf("etat actuel du plateau\n");
+			add_sub_board_pieces(TAILLE_CELL, NB_PIECES, piecenumber, board, pieces, true);
 			affiche_sur_terminal_4d(TAILLE_CELL, board); printf("\n");
 			add_sub_board_pieces(TAILLE_CELL, NB_PIECES, piecenumber, board, pieces, false);
 
@@ -758,6 +773,7 @@ int main() {
 
 				else {
 					veut_bouger = false;
+					inGame[playernumber-1] = false;
 				}
 
 			}
@@ -767,5 +783,11 @@ int main() {
 
 		if (playernumber == 1) {playernumber=2;} else {playernumber=1;}	//switch de joueur
 	}
+
+	int scorePlayer1, scorePlayer2;
+	calculateScores(&scorePlayer1, &scorePlayer2, TAILLE_CELL, board);
+	printf("fin de la partie\nscore player 1 : %d\nscore player 2 : %d\n", scorePlayer1, scorePlayer2);
+	scorePlayer1==scorePlayer2 ? printf("égalité\n") : printf("Player %d wins !\n", scorePlayer1>scorePlayer2 ? 1 : 2);
+
 	return 0;
 }
